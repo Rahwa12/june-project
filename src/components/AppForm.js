@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import Inputs from "./controls/Inputs";
+import Radios from "./controls/Radios";
 import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
   Grid,
-  TextField,
+  Radio,
+  RadioGroup,
   //   Paper,
   // Avatar,
   // Button,
@@ -10,36 +16,58 @@ import {
 } from "@mui/material";
 
 function AppForm() {
-  const initialVal = {
-    id: 0,
-    fullname: "",
-    email: "",
-    gender: "",
-    phoneNo: "",
-    // address: {
-    //   city: "",
-    //   subCity: "",
-    //   phone: "",
-    //   placeName: "",
-    //   streetName: "",
-    // },
-    address: "",
-    education: "",
-    image: "",
+  const genderItems = [
+    { id: "male", title: "Male" },
+    { id: "female", title: "Female" },
+    { id: "other", title: "Other" },
+  ];
+  //   const initialVal = {
+  //     id: 0,
+  //     firstName: "",
+  //     email: "",
+  //     gender: "",
+  //     phoneNo: "",
+  //     // address: {
+  //     //   city: "",
+  //     //   subCity: "",
+  //     //   phone: "",
+  //     //   placeName: "",
+  //     //   streetName: "",
+  //     // },
+  //     address: "",
+  //     education: "",
+  //     image: "",
+  //   };
+
+  // const [values, setValues] = useState(initialVal);
+
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("male");
+
+  // const handleInput = (e) => {
+  //   const { name, value } = e.target;
+  //   console.log(name);
+  //   setValues({ ...values, [name]: value });
+  // };
+
+  const handleInputF = (e) => {
+    setFullName(e.target.value);
+    console.log(fullName);
   };
 
-  const [values, setValues] = useState(initialVal);
-  const textStyle = { margin: "10px", width: "80%" };
-
-  const handleInput = (e) => {
-    const [name, value] = e.target;
-    // setValues({ ...values, [name]: value });
-    console.log(e.target.value);
+  const handleInputE = (e) => {
+    setEmail(e.target.value);
+    console.log(email);
+  };
+  const handleInputG = (e) => {
+    setGender(e.target.value);
+    console.log(gender);
   };
 
   return (
     <form>
-      <Grid container>
+      <Grid container style={{ padding: "20px" }}>
         <Grid item x6={6}>
           {/* <TextField
              variant="outlined"
@@ -49,27 +77,48 @@ function AppForm() {
             style={textStyle}
             required /> */}
 
-          <TextField
-            variant="outlined"
+          <Inputs
             label="Full Name"
             name="fullName"
             placeholder="Full Name"
-            value={values.fullname}
-            style={textStyle}
-            onChange={handleInput}
+            value={fullName}
+            onChange={handleInputF}
             required
           />
-          <TextField
-            variant="outlined"
+          <Inputs
             label="Email"
             name="email"
             placeholder="Email"
-            style={textStyle}
-            value={values.email}
+            value={email}
+            onChange={handleInputE}
             required
           />
         </Grid>
-        <Grid item x6={6}></Grid>
+        <Grid item x6={6}>
+          <FormControl style={{ margin: "10px" }}>
+            <FormLabel>Gender</FormLabel>
+            <RadioGroup
+              row
+              name="gender"
+              // aria-labelledby="demo-radio-buttons-group-label"
+              value={gender}
+              onChange={handleInputG}
+            >
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
+
+              <FormControlLabel
+                value="female"
+                control={<Radio />}
+                label="Female"
+              />
+              <FormControlLabel
+                value="other"
+                control={<Radio />}
+                label="Other"
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
       </Grid>
     </form>
   );

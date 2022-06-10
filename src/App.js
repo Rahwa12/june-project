@@ -5,17 +5,20 @@ import "./App.css";
 import Home from "./components/Home";
 import LogIn from "./components/LogIn";
 import Apply from "./components/Apply";
+import AppForm from "./components/AppForm";
 
 const App = () => {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LogIn />} />
-        <Route path="/apply" element={<Apply />} />
-      </Routes>
-    </Router>
+    // <Router>
+    //   <Navbar />
+    //   <Routes>
+    //     <Route path="/" element={<Home />} />
+    //     <Route path="/login" element={<LogIn />} />
+    //     <Route path="/apply" element={<Apply />} />
+    //   </Routes>
+    // </Router>
+
+    <AppForm />
   );
 };
 
