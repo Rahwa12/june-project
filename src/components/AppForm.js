@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Inputs from "./controls/Inputs";
 import Radios from "./controls/Radios";
+import Selects from "./controls/Selects";
 import {
+  Button,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -9,6 +11,7 @@ import {
   Radio,
   RadioGroup,
   //   Paper,
+
   // Avatar,
   // Button,
   // Typography,
@@ -40,10 +43,33 @@ function AppForm() {
   //   };
 
   // const [values, setValues] = useState(initialVal);
+  const depts = () => [
+    { id: "1", title: "Abcd" },
+    { id: "2", title: "Efgh" },
+    { id: "3", title: "Ijkl" },
+    { id: "4", title: "Mnop" },
+  ];
+  const levels = () => [
+    { id: "1", title: "BSc" },
+    { id: "2", title: "BA" },
+    { id: "3", title: "MSc" },
+    { id: "4", title: "MBA" },
+    { id: "5", title: "Diploma" },
+    { id: "6", title: "PHD" },
+  ];
+  const btnStyle = {
+    margin: "10px",
+    padding: "15px 30px",
+  };
 
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
+  const [address, setAddress] = useState("");
   const [gender, setGender] = useState("male");
+  const [department, setDepartment] = useState("");
+  const [educationLevel, setEducationLevel] = useState("");
 
   // const handleInput = (e) => {
   //   const { name, value } = e.target;
@@ -51,24 +77,47 @@ function AppForm() {
   //   setValues({ ...values, [name]: value });
   // };
 
-  const handleInputF = (e) => {
-    setFullName(e.target.value);
-    console.log(fullName);
+  const handleInputFName = (e) => {
+    setFirstName(e.target.value);
+    console.log(firstName);
+  };
+  const handleInputLName = (e) => {
+    setLastName(e.target.value);
+    console.log(lastName);
   };
 
-  const handleInputE = (e) => {
+  const handleInputEmail = (e) => {
     setEmail(e.target.value);
     console.log(email);
   };
-  const handleInputG = (e) => {
+  const handleInputPhone = (e) => {
+    setPhoneNo(e.target.value);
+    console.log(phoneNo);
+  };
+  const handleInputAddress = (e) => {
+    setAddress(e.target.value);
+    console.log(address);
+  };
+
+  const handleInputGender = (e) => {
     setGender(e.target.value);
     console.log(gender);
   };
 
+  const handleInputDept = (e) => {
+    setDepartment(e.target.value);
+    console.log(department);
+  };
+
+  const handleInputEduLevel = (e) => {
+    setEducationLevel(e.target.value);
+    console.log(educationLevel);
+  };
+
   return (
     <form>
-      <Grid container style={{ padding: "20px" }}>
-        <Grid item x6={6}>
+      <Grid container style={{ padding: "20px", margin: "20px " }}>
+        <Grid item xs={6}>
           {/* <TextField
              variant="outlined"
             lable="Full Name"
@@ -77,47 +126,85 @@ function AppForm() {
             style={textStyle}
             required /> */}
 
-          <Inputs
-            label="Full Name"
-            name="fullName"
-            placeholder="Full Name"
-            value={fullName}
-            onChange={handleInputF}
-            required
-          />
+          <Grid item xs={6}>
+            <Inputs
+              label="First Name"
+              name="firsstName"
+              placeholder="First Name"
+              value={firstName}
+              onChange={handleInputFName}
+              required
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Inputs
+              label="Last Name"
+              name="lastName"
+              placeholder="Last Name"
+              value={lastName}
+              onChange={handleInputLName}
+              required
+            />
+          </Grid>
           <Inputs
             label="Email"
             name="email"
             placeholder="Email"
+            type="email"
             value={email}
-            onChange={handleInputE}
+            onChange={handleInputEmail}
+            required
+          />
+          <Inputs
+            label="Phone No"
+            name="phoneNo"
+            placeholder="Phone No"
+            type="number"
+            value={phoneNo}
+            onChange={handleInputPhone}
+            required
+          />
+          <Inputs
+            label="Address"
+            name="address"
+            placeholder="Address"
+            value={address}
+            onChange={handleInputAddress}
             required
           />
         </Grid>
-        <Grid item x6={6}>
-          <FormControl style={{ margin: "10px" }}>
-            <FormLabel>Gender</FormLabel>
-            <RadioGroup
-              row
-              name="gender"
-              // aria-labelledby="demo-radio-buttons-group-label"
-              value={gender}
-              onChange={handleInputG}
-            >
-              <FormControlLabel value="male" control={<Radio />} label="Male" />
-
-              <FormControlLabel
-                value="female"
-                control={<Radio />}
-                label="Female"
-              />
-              <FormControlLabel
-                value="other"
-                control={<Radio />}
-                label="Other"
-              />
-            </RadioGroup>
-          </FormControl>
+        <Grid item xs={6}>
+          <Radios
+            label="Gender"
+            name="gender"
+            value={gender}
+            onChange={handleInputGender}
+            items={genderItems}
+          />
+          {/* <div> */}
+          <Selects
+            name="department"
+            value={department}
+            label="Department"
+            onChange={handleInputDept}
+            options={depts()}
+          />
+          {/* </div> */}
+          <Selects
+            name="educationLevel"
+            value={educationLevel}
+            label="Education Level"
+            onChange={handleInputEduLevel}
+            options={levels()}
+          />
+          <div>
+            <Button variant="contained" type="submit" style={btnStyle}>
+              Submit
+            </Button>
+            <Button variant="contained" style={btnStyle}>
+              Reset
+            </Button>
+          </div>
         </Grid>
       </Grid>
     </form>
