@@ -1,0 +1,39 @@
+h1 {
+  text-align: center;
+  margin: 30px;
+  /* color: rgb(13, 96, 172); */
+}
+button {
+  background-color: white;
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  border-radius: 7px;
+  font-weight: 500;
+}
+
+table {
+  border-collapse: collapse;
+  width: 90%;
+  margin: 0px auto;
+  background-color: rgb(156, 158, 159);
+}
+
+th {
+  background-color: rgb(107, 133, 157);
+}
+table,
+th,
+td {
+  border: 1px solid white;
+}
+
+th,
+td {
+  width: 12.5%;
+  text-align: left;
+  font-size: large;
+  padding: 7px;
+  /* color: white; */
+  font-weight: 600;
+}

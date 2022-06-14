@@ -4,12 +4,12 @@ import Radios from "./controls/Radios";
 import Selects from "./controls/Selects";
 import {
   Button,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
+  // FormControl,
+  // FormControlLabel,
+  // FormLabel,
   Grid,
-  Radio,
-  RadioGroup,
+  // Radio,
+  // RadioGroup,
   //   Paper,
 
   // Avatar,
@@ -17,6 +17,8 @@ import {
   // Typography,
   // Link,
 } from "@mui/material";
+
+import axios from "axios";
 
 function AppForm() {
   const genderItems = [
@@ -27,6 +29,7 @@ function AppForm() {
   //   const initialVal = {
   //     id: 0,
   //     firstName: "",
+  //     lastName: "",
   //     email: "",
   //     gender: "",
   //     phoneNo: "",
@@ -38,7 +41,7 @@ function AppForm() {
   //     //   streetName: "",
   //     // },
   //     address: "",
-  //     education: "",
+  //     educationLevel: "",
   //     image: "",
   //   };
 
@@ -59,7 +62,12 @@ function AppForm() {
   ];
   const btnStyle = {
     margin: "10px",
-    padding: "15px 30px",
+    padding: "10px 40px",
+  };
+  const btnrStyle = {
+    margin: "10px",
+    padding: "10px 40px",
+    backgroundColor: "gray",
   };
 
   const [firstName, setFirstName] = useState("");
@@ -70,6 +78,9 @@ function AppForm() {
   const [gender, setGender] = useState("male");
   const [department, setDepartment] = useState("");
   const [educationLevel, setEducationLevel] = useState("");
+  const [error, setError] = useState(false);
+  const [sendingRequest, setSendingRequest] = useState(false);
+  const [returnSecureToken, useReturnSecureToken] = useState(true);
 
   // const handleInput = (e) => {
   //   const { name, value } = e.target;
@@ -79,43 +90,94 @@ function AppForm() {
 
   const handleInputFName = (e) => {
     setFirstName(e.target.value);
-    console.log(firstName);
+    // console.log(firstName);
   };
   const handleInputLName = (e) => {
     setLastName(e.target.value);
-    console.log(lastName);
+    // console.log(lastName);
   };
 
   const handleInputEmail = (e) => {
     setEmail(e.target.value);
-    console.log(email);
+    // console.log(email);
   };
   const handleInputPhone = (e) => {
     setPhoneNo(e.target.value);
-    console.log(phoneNo);
+    // console.log(phoneNo);
   };
   const handleInputAddress = (e) => {
     setAddress(e.target.value);
-    console.log(address);
+    // console.log(address);
   };
 
   const handleInputGender = (e) => {
     setGender(e.target.value);
-    console.log(gender);
+    // console.log(gender);
   };
 
   const handleInputDept = (e) => {
     setDepartment(e.target.value);
-    console.log(department);
+    // console.log(department);
   };
 
   const handleInputEduLevel = (e) => {
     setEducationLevel(e.target.value);
-    console.log(educationLevel);
+    // console.log(educationLevel);
+  };
+  const handleReset = (e) => {
+    console.log("Reset");
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPhoneNo("");
+    setGender("male");
+    setAddress("");
+    setEducationLevel("");
+    setDepartment("");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // navigate("/");
+    setSendingRequest(true);
+    setError(false);
+    try {
+      const appInfo = {
+        firstName,
+        lastName,
+        email,
+        phoneNo,
+        address,
+        gender,
+        department,
+        educationLevel,
+        returnSecureToken,
+      };
+
+      const response = await axios
+        .post(
+          // "http://192.168.1.18:5000/api/employee/registerEmployee",
+          "https://hr-proj-1234-default-rtdb.firebaseio.com/applicant.json",
+          appInfo
+        )
+
+        .catch((e) => {
+          console.log("err", e);
+        });
+
+      console.log(response.data.name);
+      alert("Your Application is submitted successfully !");
+      // navigate("/registered");
+    } catch {
+      // errroneous response
+      setError(true);
+    } finally {
+      setSendingRequest(false);
+    }
   };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Grid container style={{ padding: "20px", margin: "20px " }}>
         <Grid item xs={6}>
           {/* <TextField
@@ -201,7 +263,7 @@ function AppForm() {
             <Button variant="contained" type="submit" style={btnStyle}>
               Submit
             </Button>
-            <Button variant="contained" style={btnStyle}>
+            <Button variant="contained" onClick={handleReset} style={btnrStyle}>
               Reset
             </Button>
           </div>
