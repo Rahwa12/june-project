@@ -26,26 +26,26 @@ function AppForm() {
     { id: "female", title: "Female" },
     { id: "other", title: "Other" },
   ];
-  //   const initialVal = {
-  //     id: 0,
-  //     firstName: "",
-  //     lastName: "",
-  //     email: "",
-  //     gender: "",
-  //     phoneNo: "",
-  //     // address: {
-  //     //   city: "",
-  //     //   subCity: "",
-  //     //   phone: "",
-  //     //   placeName: "",
-  //     //   streetName: "",
-  //     // },
-  //     address: "",
-  //     educationLevel: "",
-  //     image: "",
-  //   };
-
-  // const [values, setValues] = useState(initialVal);
+  const initialVal = {
+    key: 0,
+    firstName: "",
+    lastName: "",
+    email: "",
+    gender: "male",
+    phoneNo: "",
+    // address: {
+    //   city: "",
+    //   subCity: "",
+    //   phone: "",
+    //   placeName: "",
+    //   streetName: "",
+    // },
+    address: "",
+    educationLevel: "",
+    department: "",
+    // image: "",
+  };
+  const [values, setValues] = useState(initialVal);
   const depts = () => [
     { id: "1", title: "Abcd" },
     { id: "2", title: "Efgh" },
@@ -70,89 +70,100 @@ function AppForm() {
     backgroundColor: "gray",
   };
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNo, setPhoneNo] = useState("");
-  const [address, setAddress] = useState("");
-  const [gender, setGender] = useState("male");
-  const [department, setDepartment] = useState("");
-  const [educationLevel, setEducationLevel] = useState("");
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [phoneNo, setPhoneNo] = useState("");
+  // const [address, setAddress] = useState("");
+  // const [gender, setGender] = useState("male");
+  // const [department, setDepartment] = useState("");
+  // const [educationLevel, setEducationLevel] = useState("");
+
   const [error, setError] = useState(false);
   const [sendingRequest, setSendingRequest] = useState(false);
   const [returnSecureToken, useReturnSecureToken] = useState(true);
 
-  // const handleInput = (e) => {
+  // const handleInput = (e, index) => {
   //   const { name, value } = e.target;
-  //   console.log(name);
-  //   setValues({ ...values, [name]: value });
+  //   const list = [...values];
+  //   list[index][name] = value;
+  //   setValues(list);
+  //   console.log(value);
   // };
 
-  const handleInputFName = (e) => {
-    setFirstName(e.target.value);
-    // console.log(firstName);
-  };
-  const handleInputLName = (e) => {
-    setLastName(e.target.value);
-    // console.log(lastName);
+  const handleInput = (field, e) => {
+    let new_val = { ...values };
+    new_val[field] = e.target.value;
+    setValues(new_val);
+    console.log(new_val[field]);
   };
 
-  const handleInputEmail = (e) => {
-    setEmail(e.target.value);
-    // console.log(email);
-  };
-  const handleInputPhone = (e) => {
-    setPhoneNo(e.target.value);
-    // console.log(phoneNo);
-  };
-  const handleInputAddress = (e) => {
-    setAddress(e.target.value);
-    // console.log(address);
-  };
+  // const handleInputFName = (e) => {
+  //   setFirstName(e.target.value);
+  //   // console.log(firstName);
+  // };
+  // const handleInputLName = (e) => {
+  //   setLastName(e.target.value);
+  //   // console.log(lastName);
+  // };
 
-  const handleInputGender = (e) => {
-    setGender(e.target.value);
-    // console.log(gender);
-  };
+  // const handleInputEmail = (e) => {
+  //   setEmail(e.target.value);
+  //   // console.log(email);
+  // };
+  // const handleInputPhone = (e) => {
+  //   setPhoneNo(e.target.value);
+  //   // console.log(phoneNo);
+  // };
+  // const handleInputAddress = (e) => {
+  //   setAddress(e.target.value);
+  //   // console.log(address);
+  // };
 
-  const handleInputDept = (e) => {
-    setDepartment(e.target.value);
-    // console.log(department);
-  };
+  // const handleInputGender = (e) => {
+  //   setGender(e.target.value);
+  //   // console.log(gender);
+  // };
 
-  const handleInputEduLevel = (e) => {
-    setEducationLevel(e.target.value);
-    // console.log(educationLevel);
-  };
+  // const handleInputDept = (e) => {
+  //   setDepartment(e.target.value);
+  //   // console.log(department);
+  // };
+
+  // const handleInputEduLevel = (e) => {
+  //   setEducationLevel(e.target.value);
+  //   // console.log(educationLevel);
+  // };
+  // const handleReset = (e) => {
+  //   console.log("Reset");
+  //   setFirstName("");
+  //   setLastName("");
+  //   setEmail("");
+  //   setPhoneNo("");
+  //   setGender("male");
+  //   setAddress("");
+  //   setEducationLevel("");
+  //   setDepartment("");
+  // };
+
   const handleReset = (e) => {
     console.log("Reset");
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPhoneNo("");
-    setGender("male");
-    setAddress("");
-    setEducationLevel("");
-    setDepartment("");
+    setValues(initialVal);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // navigate("/");
     setSendingRequest(true);
+
     setError(false);
     try {
-      const appInfo = {
-        firstName,
-        lastName,
-        email,
-        phoneNo,
-        address,
-        gender,
-        department,
-        educationLevel,
-        returnSecureToken,
-      };
+      let val = { ...values };
+      val.key = Math.floor(Math.random() * 1000);
+      setValues(val);
+      console.log(val.key);
+      setValues(val);
+      const appInfo = values;
 
       const response = await axios
         .post(
@@ -167,7 +178,7 @@ function AppForm() {
 
       console.log(response.data.name);
       alert("Your Application is submitted successfully !");
-      // navigate("/registered");
+      // navigate("/");
     } catch {
       // errroneous response
       setError(true);
@@ -191,10 +202,12 @@ function AppForm() {
           <Grid item xs={6}>
             <Inputs
               label="First Name"
-              name="firsstName"
+              name="firstName"
               placeholder="First Name"
-              value={firstName}
-              onChange={handleInputFName}
+              value={values.firstName}
+              onChange={(event) => {
+                handleInput("firstName", event);
+              }}
               required
             />
           </Grid>
@@ -203,8 +216,10 @@ function AppForm() {
               label="Last Name"
               name="lastName"
               placeholder="Last Name"
-              value={lastName}
-              onChange={handleInputLName}
+              value={values.lastName}
+              onChange={(event) => {
+                handleInput("lastName", event);
+              }}
               required
             />
           </Grid>
@@ -213,8 +228,10 @@ function AppForm() {
             name="email"
             placeholder="Email"
             type="email"
-            value={email}
-            onChange={handleInputEmail}
+            value={values.email}
+            onChange={(event) => {
+              handleInput("email", event);
+            }}
             required
           />
           <Inputs
@@ -222,16 +239,20 @@ function AppForm() {
             name="phoneNo"
             placeholder="Phone No"
             type="number"
-            value={phoneNo}
-            onChange={handleInputPhone}
+            value={values.phoneNo}
+            onChange={(event) => {
+              handleInput("phoneNo", event);
+            }}
             required
           />
           <Inputs
             label="Address"
             name="address"
             placeholder="Address"
-            value={address}
-            onChange={handleInputAddress}
+            value={values.address}
+            onChange={(event) => {
+              handleInput("address", event);
+            }}
             required
           />
         </Grid>
@@ -239,24 +260,30 @@ function AppForm() {
           <Radios
             label="Gender"
             name="gender"
-            value={gender}
-            onChange={handleInputGender}
+            value={values.gender}
+            onChange={(event) => {
+              handleInput("gender", event);
+            }}
             items={genderItems}
           />
           {/* <div> */}
           <Selects
             name="department"
-            value={department}
+            value={values.department}
             label="Department"
-            onChange={handleInputDept}
+            onChange={(event) => {
+              handleInput("department", event);
+            }}
             options={depts()}
           />
           {/* </div> */}
           <Selects
             name="educationLevel"
-            value={educationLevel}
+            value={values.educationLevel}
             label="Education Level"
-            onChange={handleInputEduLevel}
+            onChange={(event) => {
+              handleInput("educationLevel", event);
+            }}
             options={levels()}
           />
           <div>

@@ -56,12 +56,23 @@ const LogIn = () => {
     setSendingRequest(true);
     setError(false);
     try {
-      const user = { email, password, returnSecureToken };
+      // const user = { email, password, returnSecureToken };
+      const user = { email, password };
       // send the username and password to the server
-      const response = await axios.post(
+      const response = await axios(
         // "http://192.168.1.18:5000/api/user/login",
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCORRIYrnTaGzlKLtV4rd7bYPrhRuvOOZA",
-        user
+        // "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCORRIYrnTaGzlKLtV4rd7bYPrhRuvOOZA",
+        // user
+
+        {
+          url: "/MinimalHR/Auth/login",
+          data: user,
+          method: "post",
+          headers: {
+            Content_Type: "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
       );
       // console.log("token", response.data.token);
       // localStorage.setItem("user", response.data.token);
@@ -121,6 +132,11 @@ const LogIn = () => {
         <Typography>
           <Link href="a">Forgot password ? </Link>
         </Typography>
+        {error && (
+          <h4 style={{ color: "red", textAlign: "center" }}>
+            Wrong email or password
+          </h4>
+        )}
       </Paper>
     </Grid>
   );
