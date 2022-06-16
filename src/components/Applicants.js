@@ -3,10 +3,13 @@ import "./Applicants.css";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
+import Tempo from "./Tempo";
+import EditApp from "./EditApp";
 
 function Applicants() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
+  const [loggedIn, setLoggedIn] = useState(true);
   const [data, setData] = useState(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -20,12 +23,22 @@ function Applicants() {
   const [sendingRequest, setSendingRequest] = useState(false);
   const [returnSecureToken, useReturnSecureToken] = useState(true);
 
+  const logOut = () => {
+    setLoggedIn(false);
+    navigate("/");
+  };
   function handleDelete(e) {
     console.log("delete");
 
     // const del = axios.get(
     //   "https://react-project-da4ec-default-rtdb.firebaseio.com/employee.json?name=rahwa"
     // );
+  }
+
+  function handleEdit(e) {
+    console.log("Edit");
+    // navigate("/editApp", {id: id} );
+    console.log("id", e);
   }
 
   useEffect(
@@ -66,7 +79,8 @@ function Applicants() {
               let idd = key;
               // console.log(empl[key].name);
               // setEmploy([empl[key].name, ...employ]);
-              x = [...x, applicant[key]];
+              console.log(idd);
+              x = [...x, { ...applicant[key], id: idd }];
             }
             // console.log(idd);
           })
@@ -88,66 +102,60 @@ function Applicants() {
 
   return (
     <div>
-      <h1>Applicants</h1>
+      {loggedIn ? (
+        <button
+          style={{
+            float: "right",
+            backgroundColor: "whitesmoke",
+            marginRight: "50px",
+          }}
+          onClick={logOut}
+        >
+          Log Out
+        </button>
+      ) : (
+        <></>
+      )}
+      <div>
+        <h1>Applicants</h1>
 
-      {/* <ol>
-
+        <table>
+          <tr>
+            <th>Full Name</th>
+            <th>Gender</th>
+            <th>EMAIL</th>
+            <th>PHONE NO</th>
+            <th>ADDRESS</th>
+            <th>DEPARTMENT</th>
+            <th>EDU LEVEL</th>
+            <th>ACTIONS</th>
+          </tr>
+        </table>
         {data ? (
           data.map((d, index) => (
-            <div>
-              <ul>
-                <li key={index}>
-                  <h3>
-                    {d.name} {d.gender} {d.dob} {d.salary}
-                    <button> edit</button>
-                    <button> delete</button>
-                  </h3>
-                </li>
-              </ul>
-            </div>
+            <table>
+              <tr>
+                <Tempo d={d} />
+                <td>
+                  <button
+                    className="btn"
+                    onClick={() => {
+                      handleEdit(d);
+                    }}
+                  >
+                    edit
+                  </button>
+                  <button className="btn" onClick={handleDelete}>
+                    delete
+                  </button>
+                </td>
+              </tr>
+            </table>
           ))
         ) : (
           <h3 style={{ textAlign: "center" }}>Loading</h3>
         )}
-
-      </ol> */}
-      {/* <h1>{data[0].dob}</h1> */}
-
-      <table>
-        <tr>
-          <th>Full Name</th>
-          <th>Gender</th>
-          <th>EMAIL</th>
-          <th>PHONE NO</th>
-          <th>ADDRESS</th>
-          <th>DEPARTMENT</th>
-          <th>EDU LEVEL</th>
-          <th>ACTIONS</th>
-        </tr>
-      </table>
-      {data ? (
-        data.map((d, index) => (
-          <table>
-            <tr>
-              <td>
-                {d.firstName} {d.lastName}
-              </td>
-              <td>{d.gender}</td>
-              <td>{d.email}</td>
-              <td>{d.phoneNo}</td>
-              <td>{d.address}</td>
-              <td>{d.department}</td>
-              <td>{d.educationLevel}</td>
-              <td>
-                <button> edit</button>
-                <button onClick={handleDelete}> delete</button>
-              </td>
-            </tr>
-          </table>
-        ))
-      ) : (
-        <h3 style={{ textAlign: "center" }}>Loading</h3>
-      )}
+      </div>
     </div>
   );
 }

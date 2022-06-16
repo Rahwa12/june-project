@@ -16,12 +16,18 @@ button {
   padding: 10px;
 }
 
+.btn {
+  font-size: 15px;
+  width: 50px;
+}
+
 .hom {
   text-align: left;
   /* color: rgb(132, 179, 181); */
 }
 
 .navbar {
+  margin-top: 20px;
   font-size: larger;
   background-color: whitesmoke;
   height: 40px;

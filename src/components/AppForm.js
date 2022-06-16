@@ -158,11 +158,11 @@ function AppForm() {
 
     setError(false);
     try {
-      let val = { ...values };
-      val.key = Math.floor(Math.random() * 1000);
-      setValues(val);
-      console.log(val.key);
-      setValues(val);
+      // let val = { ...values };
+      // val.key = Math.floor(Math.random() * 1000);
+      // setValues(val);
+      // console.log(val.key);
+      // setValues(val);
       const appInfo = values;
 
       const response = await axios

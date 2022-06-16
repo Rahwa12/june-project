@@ -5,8 +5,8 @@ import "./App.css";
 import Home from "./components/Home";
 import LogIn from "./components/LogIn";
 import Apply from "./components/Apply";
-// import AppForm from "./components/AppForm";
 import Applicants from "./components/Applicants";
+import EditApp from "./components/EditApp";
 
 const App = () => {
   return (
@@ -16,11 +16,12 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/apply" element={<Apply />} />
+        <Route path="/editApp" element={<EditApp />} />
         <Route path="/applicants" element={<Applicants />} />
       </Routes>
     </Router>
 
-    // <AppForm />
+    // <EditApp />
     // <Applicants />
     // <Home />
   );
