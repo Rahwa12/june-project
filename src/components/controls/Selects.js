@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 function Selects(props) {
   const { name, label, value, onChange, options } = props;
@@ -23,7 +17,7 @@ function Selects(props) {
       >
         <MenuItem value="">None</MenuItem>
         {options.map((item) => (
-          <MenuItem key={item.id} value={item.title}>
+          <MenuItem key={item.id} value={item.id}>
             {item.title}
           </MenuItem>
         ))}

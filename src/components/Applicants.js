@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import Tempo from "./Tempo";
-import EditApp from "./EditApp";
+// import EditApp from "./EditApp";
 
 function Applicants() {
   const navigate = useNavigate();
 
   const [loggedIn, setLoggedIn] = useState(true);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,24 +27,46 @@ function Applicants() {
     setLoggedIn(false);
     navigate("/");
   };
-  function handleDelete(e) {
-    console.log("delete");
+  const handleDelete = async (e) => {
+    const del = await axios.delete(
+      // "http://192.168.1.18:5000/api/employee/registerEmployee",
+      "https://hr-proj-1234-default-rtdb.firebaseio.com/applicant/" +
+        e.id +
+        ".json"
+    );
+    console.log("deleting : ", e);
 
-    // const del = axios.get(
-    //   "https://react-project-da4ec-default-rtdb.firebaseio.com/employee.json?name=rahwa"
-    // );
-  }
+    // console.log("deleting -- ", del);
+
+    alert("Application deleted successfully !");
+
+    function refreshPage() {
+      window.location.reload(false);
+    }
+    refreshPage();
+  };
 
   function handleEdit(e) {
-    console.log("Edit");
-    // navigate("/editApp", {id: id} );
-    console.log("id", e);
+    console.log("Editing", e);
+
+    navigate("/editApp", {
+      state: {
+        id: e.id,
+        firstName: e.firstName,
+        lastName: e.lastName,
+        email: e.email,
+        phoneNo: e.phoneNo,
+        address: e.address,
+        gender: e.gender,
+        department: e.department,
+        educationLevel: e.educationLevel,
+      },
+    });
+    // console.log("phone", e.phoneNo);
   }
 
   useEffect(
     () => async () => {
-      // e.preventDefault();
-      // navigate("/");
       setSendingRequest(true);
       setError(false);
       try {
@@ -60,7 +82,6 @@ function Applicants() {
           educationLevel,
           returnSecureToken,
         };
-        // empRef.push(employeeInfo);
 
         const response = await axios
           .get(
@@ -68,30 +89,27 @@ function Applicants() {
           )
           .then((res) => {
             const applicant = res.data;
-            let a = Object.values(applicant);
-            setData(a);
-            console.log("first", data);
-            console.log("first", a);
-
-            let x = [];
-            // console.log(empl);
+            console.log(res);
+            let a;
+            let b = [];
             for (let key in applicant) {
-              let idd = key;
-              // console.log(empl[key].name);
-              // setEmploy([empl[key].name, ...employ]);
-              console.log(idd);
-              x = [...x, { ...applicant[key], id: idd }];
+              // console.log("iddd now key", key);
+
+              // let a = Object.values(applicant);
+              a = { ...applicant[key], id: key };
+              b.push(a);
+
+              // console.log("datas AAA ", a);
+              // console.log("datas BBB ", b);
             }
-            // console.log(idd);
+            setData(b);
           })
           .catch((e) => {
             console.log("err", e);
           });
 
         console.log(response.data.name);
-        // navigate("/registered");
       } catch {
-        // errroneous response
         setError(true);
       } finally {
         setSendingRequest(false);
@@ -121,14 +139,14 @@ function Applicants() {
 
         <table>
           <tr>
-            <th>Full Name</th>
-            <th>Gender</th>
+            <th>FULL NAME</th>
+            <th style={{ width: "10%" }}>GENDER</th>
             <th>EMAIL</th>
             <th>PHONE NO</th>
             <th>ADDRESS</th>
             <th>DEPARTMENT</th>
-            <th>EDU LEVEL</th>
-            <th>ACTIONS</th>
+            <th style={{ width: "10%" }}>EDU LEVEL</th>
+            <th style={{ width: "16.5%", textAlign: "center" }}>ACTIONS</th>
           </tr>
         </table>
         {data ? (
@@ -136,16 +154,23 @@ function Applicants() {
             <table>
               <tr>
                 <Tempo d={d} />
-                <td>
+                <td style={{ width: "16.5%" }}>
                   <button
                     className="btn"
+                    style={{ margin: "3% 8%" }}
                     onClick={() => {
                       handleEdit(d);
                     }}
                   >
                     edit
                   </button>
-                  <button className="btn" onClick={handleDelete}>
+                  <button
+                    className="btn"
+                    style={{ margin: "3% 8%" }}
+                    onClick={() => {
+                      handleDelete(d);
+                    }}
+                  >
                     delete
                   </button>
                 </td>

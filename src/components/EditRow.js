@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const EditRow = () => {
-  return (
-    
-  )
-}
+  return <h2> Edittt </h2>;
+};
 
-export default EditRow
+export default EditRow;

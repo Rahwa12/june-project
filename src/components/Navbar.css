@@ -18,7 +18,7 @@ button {
 
 .btn {
   font-size: 15px;
-  width: 50px;
+  width: 60px;
 }
 
 .hom {
@@ -27,11 +27,11 @@ button {
 }
 
 .navbar {
-  margin-top: 20px;
-  font-size: larger;
+  margin: 10px 5px;
+  font-size: 17px;
   background-color: whitesmoke;
-  height: 40px;
-  padding: 30px;
+  height: 70px;
+  padding: 1px 10px;
 }
 
 /* .log {

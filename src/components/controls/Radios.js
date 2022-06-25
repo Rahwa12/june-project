@@ -5,6 +5,7 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+import { red } from "@mui/material/colors";
 import React from "react";
 
 function Radios(props) {
@@ -16,11 +17,11 @@ function Radios(props) {
       <RadioGroup row name={name} value={value} onChange={onChange}>
         {items.map((item) => (
           <FormControlLabel
+            key={item.id}
             value={item.id}
             control={<Radio />}
             label={item.title}
           />
-          // <FormControlLabel value="male" control={<Radio />} label="Male" />;
         ))}
       </RadioGroup>
     </FormControl>

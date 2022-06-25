@@ -1,17 +1,19 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 import "./App.css";
 import Home from "./components/Home";
 import LogIn from "./components/LogIn";
 import Apply from "./components/Apply";
 import Applicants from "./components/Applicants";
 import EditApp from "./components/EditApp";
+import Headers from "./components/Headers";
 
 const App = () => {
   return (
     <Router>
-      <Navbar />
+      <Headers />
+      {/* <Navbar /> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LogIn />} />
@@ -23,7 +25,7 @@ const App = () => {
 
     // <EditApp />
     // <Applicants />
-    // <Home />
+    // <Headers />
   );
 };
 

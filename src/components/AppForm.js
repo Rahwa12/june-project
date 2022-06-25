@@ -1,33 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Inputs from "./controls/Inputs";
 import Radios from "./controls/Radios";
 import Selects from "./controls/Selects";
-import {
-  Button,
-  // FormControl,
-  // FormControlLabel,
-  // FormLabel,
-  Grid,
-  // Radio,
-  // RadioGroup,
-  //   Paper,
-
-  // Avatar,
-  // Button,
-  // Typography,
-  // Link,
-} from "@mui/material";
+import { Button, Grid } from "@mui/material";
 
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function AppForm() {
+  const navigate = useNavigate();
   const genderItems = [
     { id: "male", title: "Male" },
     { id: "female", title: "Female" },
     { id: "other", title: "Other" },
   ];
   const initialVal = {
-    key: 0,
+    // key: 0,
     firstName: "",
     lastName: "",
     email: "",
@@ -46,28 +34,37 @@ function AppForm() {
     // image: "",
   };
   const [values, setValues] = useState(initialVal);
+
   const depts = () => [
-    { id: "1", title: "Abcd" },
-    { id: "2", title: "Efgh" },
-    { id: "3", title: "Ijkl" },
-    { id: "4", title: "Mnop" },
+    { id: "swEng", title: "Software Eng" },
+    { id: "elecEng", title: "Electrical Eng" },
+    { id: "electroEng", title: "Electro Mech Eng" },
+    { id: "arch", title: "Archtecture" },
   ];
+
   const levels = () => [
-    { id: "1", title: "BSc" },
-    { id: "2", title: "BA" },
-    { id: "3", title: "MSc" },
-    { id: "4", title: "MBA" },
-    { id: "5", title: "Diploma" },
-    { id: "6", title: "PHD" },
+    { id: "bsc", title: "BSc" },
+    { id: "ba", title: "BA" },
+    { id: "msc", title: "MSc" },
+    { id: "mba", title: "MBA" },
+    { id: "diploma", title: "Diploma" },
+    { id: "phd", title: "PHD" },
   ];
   const btnStyle = {
-    margin: "10px",
-    padding: "10px 40px",
+    display: "flex",
+    // justifyContent: "center",
+    margin: "15px auto",
+    padding: "15px",
+    backgroundColor: "gray",
   };
   const btnrStyle = {
-    margin: "10px",
-    padding: "10px 40px",
-    backgroundColor: "gray",
+    display: "flex",
+    justifyContent: "center",
+    margin: "15px ",
+    padding: "13px",
+    border: "solid 2px",
+    color: "gray",
+    backgroundColor: "white",
   };
 
   // const [firstName, setFirstName] = useState("");
@@ -78,10 +75,10 @@ function AppForm() {
   // const [gender, setGender] = useState("male");
   // const [department, setDepartment] = useState("");
   // const [educationLevel, setEducationLevel] = useState("");
-
+  const [key, setKey] = useState("");
   const [error, setError] = useState(false);
   const [sendingRequest, setSendingRequest] = useState(false);
-  const [returnSecureToken, useReturnSecureToken] = useState(true);
+  const [returnSecureToken, setReturnSecureToken] = useState(true);
 
   // const handleInput = (e, index) => {
   //   const { name, value } = e.target;
@@ -158,11 +155,6 @@ function AppForm() {
 
     setError(false);
     try {
-      // let val = { ...values };
-      // val.key = Math.floor(Math.random() * 1000);
-      // setValues(val);
-      // console.log(val.key);
-      // setValues(val);
       const appInfo = values;
 
       const response = await axios
@@ -177,8 +169,9 @@ function AppForm() {
         });
 
       console.log(response.data.name);
+
       alert("Your Application is submitted successfully !");
-      // navigate("/");
+      navigate("/");
     } catch {
       // errroneous response
       setError(true);
@@ -190,7 +183,7 @@ function AppForm() {
   return (
     <form onSubmit={handleSubmit}>
       <Grid container style={{ padding: "20px", margin: "20px " }}>
-        <Grid item xs={6}>
+        <Grid container item xs={6}>
           {/* <TextField
              variant="outlined"
             lable="Full Name"
@@ -199,7 +192,7 @@ function AppForm() {
             style={textStyle}
             required /> */}
 
-          <Grid item xs={6}>
+          <Grid item xs={5.35}>
             <Inputs
               label="First Name"
               name="firstName"
@@ -211,7 +204,7 @@ function AppForm() {
               required
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={5.35}>
             <Inputs
               label="Last Name"
               name="lastName"
@@ -256,7 +249,7 @@ function AppForm() {
             required
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid container item xs={6}>
           <Radios
             label="Gender"
             name="gender"
@@ -266,7 +259,6 @@ function AppForm() {
             }}
             items={genderItems}
           />
-          {/* <div> */}
           <Selects
             name="department"
             value={values.department}
@@ -276,7 +268,6 @@ function AppForm() {
             }}
             options={depts()}
           />
-          {/* </div> */}
           <Selects
             name="educationLevel"
             value={values.educationLevel}
@@ -286,14 +277,16 @@ function AppForm() {
             }}
             options={levels()}
           />
-          <div>
+          <Grid item xs={5.35}>
             <Button variant="contained" type="submit" style={btnStyle}>
               Submit
             </Button>
+          </Grid>
+          <Grid item xs={5.35}>
             <Button variant="contained" onClick={handleReset} style={btnrStyle}>
               Reset
             </Button>
-          </div>
+          </Grid>
         </Grid>
       </Grid>
     </form>

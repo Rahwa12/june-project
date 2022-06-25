@@ -10,8 +10,7 @@ import {
   Link,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+// import FormControlLabel from "@mui/material/FormControlLabel";
 import axios from "axios";
 import PasswordEye from "@mui/icons-material/RemoveRedEyeRounded";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -28,16 +27,16 @@ const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const paperStyle = {
-    height: "65vh",
+    height: "55vh",
     padding: "30px",
     width: "280px",
     margin: "30px auto",
     borderRadius: "20px",
     // backgroundColor: "whitesmoke",
   };
-  const avatarStyle = { backgroundColor: "#369e7d" };
+  const avatarStyle = { backgroundColor: "gray" };
   const textStyle = { marginBottom: "20px" };
-  let btnStyle = { margin: "8px 0" };
+  let btnStyle = { margin: "8px 0px", backgroundColor: "gray" };
   const showPassStyle = {
     position: "relative",
     top: "-60px",
@@ -65,20 +64,20 @@ const LogIn = () => {
     setSendingRequest(true);
     setError(false);
     try {
-      // const user = { email, password, returnSecureToken };
-      const user = { email, password };
+      const user = { email, password, returnSecureToken };
+      // const user = { email, password };
       // send the username and password to the server
-      const response = await axios(
+      const response = await axios.post(
         // "http://192.168.1.18:5000/api/user/login",
-        // "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCORRIYrnTaGzlKLtV4rd7bYPrhRuvOOZA",
-        // user
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCORRIYrnTaGzlKLtV4rd7bYPrhRuvOOZA",
+        user
 
-        {
-          url: "http://192.168.1.7/Auth/login",
-          data: user,
-          method: "post",
-          headers: { "Access-Control-Allow-Origin": "*" },
-        }
+        // {
+        //   url: "http://192.168.1.7/Auth/login",
+        //   data: user,
+        //   method: "post",
+        //   headers: { "Access-Control-Allow-Origin": "*" },
+        // }
       );
       console.log("fkljfkls", response);
       // console.log("token", response.data.token);
@@ -95,7 +94,7 @@ const LogIn = () => {
   };
 
   return (
-    <Grid>
+    <Grid style={{ backgroundColor: "whitesmoke" }}>
       <Paper elevation={5} style={paperStyle}>
         <Grid align="center">
           <Avatar style={avatarStyle}>
@@ -127,15 +126,13 @@ const LogIn = () => {
             {showPassword ? <PasswordEye /> : <VisibilityOffIcon />}
           </span>
 
-          {/* <button onClick={showPass}>Show Password</button> */}
-
           {/* <FormControlLabel
             control={<Checkbox name="checked" color="primary" />}
             label="Remember me"
           /> */}
           <Button
             type="submit"
-            color="primary"
+            // color="primary"
             variant="contained"
             style={btnStyle}
             disabled={sendingRequest}
